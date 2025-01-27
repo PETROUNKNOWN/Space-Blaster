@@ -23,9 +23,29 @@ class App(ctk.CTk):
 
         self.canvas.bind("<Button-1>", self.on_click)
         # self.canvas.create_arc(0, 0, 300, 300,width=1,start=0, extent=-180)
+        canvas=self.canvas_size
         flat_coordinates = [
-            119.67,238.75,-32.83,28.70,2.78,13.64,33.87,0.06,4.71,-3.54,9.42,-3.54,152.64,-3.54,4.71,3.54,33.87,-0.06,2.78,-13.64,-32.82,-28.70,-32.82,-13.54,65.94,-13.54,65.94,-14.13,65.94,-9.93,-2.65,-5.89,-2.65,5.89,-2.65,1.44,-2.65,-1.44,-2.65,-5.89,-2.66,5.89,-2.66,9.93,-2.66,14.13,65.94,14.13,65.94,238.75,119.67,238.75
-
+            0.5*canvas,0.05*canvas,
+            0.54*canvas,0.17*canvas,
+            0.565*canvas,0.35*canvas,
+            0.59*canvas,0.44*canvas,
+            0.59*canvas,0.49*canvas,
+            0.775*canvas,0.615*canvas,
+            0.775*canvas,0.56*canvas,
+            0.78*canvas,0.55*canvas,
+            0.785*canvas,0.56*canvas,
+            0.785*canvas,0.75*canvas,
+            0.775*canvas,0.75*canvas,
+            0.775*canvas,0.715*canvas,
+            0.56*canvas,0.715*canvas,
+            0.56*canvas,0.81*canvas,
+            0.67*canvas,0.895*canvas,
+            0.67*canvas,0.955*canvas,
+            0.57*canvas,0.955*canvas,
+            0.57*canvas,0.94*canvas,
+            0.56*canvas,0.94*canvas,
+            0.56*canvas,0.88*canvas,
+            0.54*canvas,0.965*canvas
         ]
         
         self.canvas.create_polygon(flat_coordinates, fill="gray", outline="black")
