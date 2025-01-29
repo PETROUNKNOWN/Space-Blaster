@@ -18,10 +18,13 @@ class App(ctk.CTk):
         # myCanvas.grid(row=0,column=0)
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        self.canvas = ctk.CTkCanvas(self, width=self.canvas_size, height=self.canvas_size, bg="white")
-        self.canvas.grid(row=0,column=0)
+        self.canvasWidget = ctk.CTkCanvas(self, width=self.canvas_size, height=self.canvas_size, bg="white")
+        self.canvasWidget.grid(row=0,column=0)
 
-        self.canvas.bind("<Button-1>", self.on_click)
+        self.canvasWidget.bind("<Button-1>", self.on_click)
+        self.canvasWidget.bind('<Right>',lambda event: self.moveJet(event,"right"))
+        self.canvasWidget.bind('<Left>',lambda event: self.moveJet(event,"left"))
+        self.canvasWidget.focus_set()
         # self.canvas.create_arc(0, 0, 300, 300,width=1,start=0, extent=-180)
         canvas=self.canvas_size
         flat_coordinates = [
@@ -71,9 +74,16 @@ class App(ctk.CTk):
 
         ]
         
-        self.canvas.create_polygon(flat_coordinates, fill="gray", outline="black")
+        self.jet=self.canvasWidget.create_polygon(flat_coordinates, fill="gray", outline="black")
 
-    
+    def moveJet(self,event,direction):
+        if direction == "right":
+            self.canvasWidget.move(self.jet, 30, 0)
+        elif direction == "left":
+            self.canvasWidget.move(self.jet, -30, 0)
+        else:
+            print("Wrong Direction")
+        
     
     def on_click(self, event):
         x = event.x
@@ -81,7 +91,6 @@ class App(ctk.CTk):
 
         custom_x = x - 150 
         custom_y = 300 - y  
-
         print(f"Click: ({custom_x}, {custom_y})")
 
 
