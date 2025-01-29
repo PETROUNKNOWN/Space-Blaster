@@ -10,7 +10,7 @@ class App(ctk.CTk):
         self.title("Space Blaster")
         self.geometry("-5-0")
         self.resizable(0, True)
-        self.canvas_size = 300
+        self.canvas_size = 400
         # self.iconpath = ImageTk.PhotoImage(file=os.path.join("/assets/logo.png"))
         # self.root.wm_iconbitmap()
         # self.root.iconphoto(False, self.iconpath)
