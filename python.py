@@ -2,6 +2,8 @@ import customtkinter as ctk
 from PIL import ImageTk
 import os
 import math
+import random
+import time
 
 class App(ctk.CTk):
 
@@ -79,6 +81,19 @@ class App(ctk.CTk):
         ]
         
         self.jet=self.canvasWidget.create_polygon(flat_coordinates, fill="gray", outline="black")
+        self.varSpawn=[1,2,3,4,5,6,7,8,9]
+        self.counter=1
+        self.objects=[]
+        
+
+    def dajfn(self):
+        # while True:
+        time.sleep(3)
+        for item in self.objects:
+            print(item)
+            self.moveScene(item)
+        self.dajfn()
+        
 
     def moveJet(self,event,direction):
         if direction == "right":
@@ -96,8 +111,21 @@ class App(ctk.CTk):
         self.canvasWidget.move(self.jet, 30, 0)
     def flyLeft(self,event):
         self.canvasWidget.move(self.jet, -30, 0)
+
+    
+        
+    def makeScene(self):
+        objName=f"object{str(self.counter)}"
+        objName=self.canvasWidget.create_rectangle(2,2,5,5)
+        self.objects.append(objName)
         
     
+    def moveScene(self,item):
+        self.canvasWidget.move(item, 0, 30)
+        
+            
+    
+
     def on_click(self, event):
         x = event.x
         y = event.y
@@ -105,6 +133,13 @@ class App(ctk.CTk):
         custom_x = x - 150 
         custom_y = 300 - y  
         print(f"Click: ({custom_x}, {custom_y})")
+
+        
+        
+        if random.choice(self.varSpawn) == 8:
+            self.makeScene()
+            self.counter+=1
+        self.dajfn()
 
 
 if __name__ == "__main__":
