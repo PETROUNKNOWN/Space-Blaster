@@ -1,9 +1,7 @@
 import customtkinter as ctk
 from PIL import ImageTk
 import os
-import math
 import random
-import time
 
 class App(ctk.CTk):
 
@@ -13,25 +11,22 @@ class App(ctk.CTk):
         self.geometry("-5-0")
         self.resizable(0, True)
         self.canvas_size = 800
-        # self.iconpath = ImageTk.PhotoImage(file=os.path.join("/assets/logo.png"))
-        # self.root.wm_iconbitmap()
-        # self.root.iconphoto(False, self.iconpath)
-        # myCanvas=ctk.CTkCanvas(self,height=50,width=50,bd=50,background=)
-        # myCanvas.grid(row=0,column=0)
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        self.canvasWidget = ctk.CTkCanvas(self, width=self.canvas_size, height=self.canvas_size, bg="white")
-        self.canvasWidget.grid(row=0,column=0)
 
+        # Proper way to define CTkCanvas
+        self.canvasWidget = ctk.CTkCanvas(self, width=self.canvas_size, height=self.canvas_size, bg="white")
+        self.canvasWidget.grid(row=0, column=0)
+
+        # Key and Mouse Bindings
         self.canvasWidget.bind("<Button-1>", self.on_click)
-        self.canvasWidget.bind('<Right>',self.flyRight)
-        self.canvasWidget.bind('<Left>',self.flyLeft)
-        # self.canvasWidget.bind('<Right>',lambda event: self.moveJet(event,"right"))
-        # self.canvasWidget.bind('<Left>',lambda event: self.moveJet(event,"left"))
-        self.canvasWidget.bind('<Up>',lambda event: self.moveJet(event,"up"))
-        self.canvasWidget.bind('<Down>',lambda event: self.moveJet(event,"down"))
+        self.bind('<Right>', self.flyRight)
+        self.bind('<Left>', self.flyLeft)
+        self.bind('<Up>', lambda event: self.moveJet(event, "up"))
+        self.bind('<Down>', lambda event: self.moveJet(event, "down"))
+
         self.canvasWidget.focus_set()
-        # self.canvas.create_arc(0, 0, 300, 300,width=1,start=0, extent=-180)
+
         jetSize=100
         flat_coordinates = [
             0.5*jetSize,0.05*jetSize,
@@ -81,66 +76,46 @@ class App(ctk.CTk):
         ]
         
         self.jet=self.canvasWidget.create_polygon(flat_coordinates, fill="gray", outline="black")
-        self.varSpawn=[1,2,3,4,5,6,7,8,9]
-        self.counter=1
-        self.objects=[]
-        
+
+        # Jet Shape Placeholder
+        # self.jet = self.canvasWidget.create_rectangle(375, 375, 425, 425, fill="gray", outline="black")
+
+        self.varSpawn = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.counter = 1
+        self.objects = []
 
     def dajfn(self):
-        # while True:
-        time.sleep(3)
+        self.after(3000, self.dajfn)
         for item in self.objects:
-            print(item)
             self.moveScene(item)
-        self.dajfn()
-        
-
-    def moveJet(self,event,direction):
-        if direction == "right":
-            self.canvasWidget.move(self.jet, 30, 0)
-        elif direction == "left":
-            self.canvasWidget.move(self.jet, -30, 0)
-        elif direction == "up":
-            self.canvasWidget.move(self.jet, 0, -30)
-        elif direction == "down":
-            self.canvasWidget.move(self.jet, 0, 30)
-        else:
-            print("Wrong Direction")
-
-    def flyRight(self,event):
-        self.canvasWidget.move(self.jet, 30, 0)
-    def flyLeft(self,event):
-        self.canvasWidget.move(self.jet, -30, 0)
-
     
-        
+    def moveJet(self, event, direction):
+        move_map = {"right": (30, 0), "left": (-30, 0), "up": (0, -30), "down": (0, 30)}
+        if direction in move_map:
+            self.canvasWidget.move(self.jet, *move_map[direction])
+
+    def flyRight(self, event):
+        self.moveJet(event, "right")
+
+    def flyLeft(self, event):
+        self.moveJet(event, "left")
+
     def makeScene(self):
-        objName=f"object{str(self.counter)}"
-        objName=self.canvasWidget.create_rectangle(2,2,5,5)
-        self.objects.append(objName)
-        
-    
-    def moveScene(self,item):
+        obj = self.canvasWidget.create_rectangle(2, 2, 5, 5, fill="black")
+        self.objects.append(obj)
+
+    def moveScene(self, item):
         self.canvasWidget.move(item, 0, 30)
-        
-            
-    
+        self.objects.__delitem__(item)
 
     def on_click(self, event):
-        x = event.x
-        y = event.y
+        x, y = event.x, event.y
+        print(f"Click: ({x - 150}, {300 - y})")
 
-        custom_x = x - 150 
-        custom_y = 300 - y  
-        print(f"Click: ({custom_x}, {custom_y})")
-
-        
-        
-        if random.choice(self.varSpawn) == 8:
+        if random.choice(self.varSpawn) == 1 or 2 or 3 or 4 or 5:
             self.makeScene()
-            self.counter+=1
+            self.counter += 1
         self.dajfn()
-
 
 if __name__ == "__main__":
     app = App()
