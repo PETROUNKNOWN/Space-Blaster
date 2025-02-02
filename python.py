@@ -112,7 +112,7 @@ class App(ctk.CTk):
         x, y = event.x, event.y
         print(f"Click: ({x - 150}, {300 - y})")
 
-        if random.choice(self.varSpawn) == 1 or 2 or 3 or 4 or 5:
+        if random.choice(self.varSpawn) == 1:
             self.makeScene()
             self.counter += 1
         self.dajfn()
